@@ -26,14 +26,14 @@ class Post(models.Model):
     image = models.ImageField(upload_to='post/img', null=True, blank=True)
     caption = models.CharField(max_length=100, verbose_name='описания')
     created_at = models.DateTimeField(auto_now_add=True)
-    # likes = models.ManyToManyField(UserProfile, blank=True, related_name='post_like')
+    likes = models.IntegerField()
     hashtag = models.TextField()
 
 
 class PostLike(models.Model):
     user = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    # likes = models.OneToOneRel(Post, on_delete=models.CASCADE)
+    likes = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -45,7 +45,7 @@ class Comment(models.Model):
     user = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    # like = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='post_like')
+    like = models.IntegerField()
 
 
 class CommentLike(models.Model):
@@ -59,7 +59,7 @@ class Story(models.Model):
     image = models.ImageField(upload_to='story/img', null=True, blank=True)
     video = models.FileField(upload_to='story/video', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    # expires_at
+    expires_at = models.DateField()
 
 
 class Group(models.Model):
@@ -67,13 +67,4 @@ class Group(models.Model):
     description = models.TextField()
     creator = models.DateTimeField(auto_now_add=True)
     members = models.ImageField()
-    # join_key = models.
-#
-# CRUD
-# FILTER(hashtag)
-# search(nickname)
-# permission(IsAuthOrReadOn)
-# register + google + github
-# ru
-# en...
-# github
+    join_key = models.CharField(max_length=100)
